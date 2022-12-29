@@ -2,6 +2,9 @@ package io.github.danilodantas.localizacao.domain.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -12,9 +15,17 @@ public interface CidadeRepository extends JpaRepository<Cidade, Long> {
 	// Busca pelo nome correto
 	List<Cidade> findByNome(String nome);
 	
-	// Busca pelo nome like
+	// Busca pelo nome like ordenando por Sort
 	@Query("select c from Cidade c where lower(c.nome) like lower(?1) ")
 	List<Cidade> findByNomeLike(String nome);
+	
+	// Busca pelo nome like ordenando por Sort
+	@Query("select c from Cidade c where lower(c.nome) like lower(?1) ")
+	List<Cidade> findByNomeLikeSort(String nome, Sort sort);
+	
+	// Busca pelo nome like ordenando por page
+	@Query("select c from Cidade c where lower(c.nome) like lower(?1) ")
+	Page<Cidade> findByNomeLikePage(String nome, Pageable pageable);
 	
 	// busca pelo nome começando por aquele pedaço
 	List<Cidade> findByNomeStartingWith(String nome);

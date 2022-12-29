@@ -8,66 +8,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import io.github.danilodantas.localizacao.domain.entity.Cidade;
 import io.github.danilodantas.localizacao.domain.repository.CidadeRepository;
+import io.github.danilodantas.localizacao.service.CidadeService;
 
 @SpringBootApplication
 public class LocalizacaoApplication implements CommandLineRunner {
 	
 	@Autowired
-	private CidadeRepository cidadeRepository;
+	private CidadeService cidadeService;
 	
 	@Override
 	public void run(String... args) throws Exception {
-		listarCidadesPorQuantidadeHabitantesMenorEnome();
-	}
-	
-	@Transactional
-	void salvarCidade() {
-		var cidade = new Cidade(1L, "São Paulo", 12396372L);
-		cidadeRepository.save(cidade);
-	}
-	
-	void listarCidadesPorNome() {
-		cidadeRepository.findByNome("Porto Velho").forEach(System.out::println);
-	}
-	
-	void listarCidadesPorNomeComeca() {
-		cidadeRepository.findByNomeStartingWith("Porto").forEach(System.out::println);
-	}
-	
-	void listarCidadesPorNomeTermina() {
-		cidadeRepository.findByNomeEndingWith("a").forEach(System.out::println);
-	}
-	
-	void listarCidadesPorNomeContem() {
-		cidadeRepository.findByNomeContaining("a").forEach(System.out::println);
-	}
-	
-	void listarCidadesPorLike() {
-		cidadeRepository.findByNomeLike("porto%").forEach(System.out::println);
-	}
-	
-	void listarCidadesPorHabitantes() {
-		cidadeRepository.findByHabitantes(78787900L).forEach(System.out::println);
-	}
-	
-	void listarCidadesPorQuantidadeHabitantesMenor() {
-		cidadeRepository.findByHabitantesLessThan(1000001L).forEach(System.out::println);
-	}
-	
-	void listarCidadesPorQuantidadeHabitantesMenorIgual() {
-		cidadeRepository.findByHabitantesLessThanEqual(1000001L).forEach(System.out::println);
-	}
-	
-	void listarCidadesPorQuantidadeHabitantesMaior() {
-		cidadeRepository.findByHabitantesGreaterThan(1000001L).forEach(System.out::println);
-	}
-	
-	void listarCidade() {
-		cidadeRepository.findAll().forEach(System.out::println);
-	}
-	
-	void listarCidadesPorQuantidadeHabitantesMenorEnome() {
-		cidadeRepository.findByHabitantesLessThanAndNomeLike(1000001L, "Br%").forEach(System.out::println);
+		cidadeService.listarCidadesPorNomeLikePage();
 	}
 	
 	public static void main(String[] args) {
