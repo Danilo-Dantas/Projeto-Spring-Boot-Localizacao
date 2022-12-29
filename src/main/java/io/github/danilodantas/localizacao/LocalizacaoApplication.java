@@ -14,11 +14,12 @@ import io.github.danilodantas.localizacao.service.CidadeService;
 public class LocalizacaoApplication implements CommandLineRunner {
 	
 	@Autowired
-	private CidadeService cidadeService;
+	private CidadeService cidadeService; 
 	
 	@Override
 	public void run(String... args) throws Exception {
-		cidadeService.listarCidadesPorNomeLikePage();
+		var cidade = new Cidade(null, "porto", null);
+		cidadeService.filtroDinamico(cidade).forEach(System.out::println);
 	}
 	
 	public static void main(String[] args) {
