@@ -17,7 +17,7 @@ public class LocalizacaoApplication implements CommandLineRunner {
 	
 	@Override
 	public void run(String... args) throws Exception {
-		listarCidadesPorLike();
+		listarCidadesPorQuantidadeHabitantesMenorEnome();
 	}
 	
 	@Transactional
@@ -50,9 +50,24 @@ public class LocalizacaoApplication implements CommandLineRunner {
 		cidadeRepository.findByHabitantes(78787900L).forEach(System.out::println);
 	}
 	
+	void listarCidadesPorQuantidadeHabitantesMenor() {
+		cidadeRepository.findByHabitantesLessThan(1000001L).forEach(System.out::println);
+	}
+	
+	void listarCidadesPorQuantidadeHabitantesMenorIgual() {
+		cidadeRepository.findByHabitantesLessThanEqual(1000001L).forEach(System.out::println);
+	}
+	
+	void listarCidadesPorQuantidadeHabitantesMaior() {
+		cidadeRepository.findByHabitantesGreaterThan(1000001L).forEach(System.out::println);
+	}
 	
 	void listarCidade() {
 		cidadeRepository.findAll().forEach(System.out::println);
+	}
+	
+	void listarCidadesPorQuantidadeHabitantesMenorEnome() {
+		cidadeRepository.findByHabitantesLessThanAndNomeLike(1000001L, "Br%").forEach(System.out::println);
 	}
 	
 	public static void main(String[] args) {
