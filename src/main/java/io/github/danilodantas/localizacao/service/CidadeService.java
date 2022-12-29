@@ -15,6 +15,8 @@ import org.springframework.util.StringUtils;
 
 import io.github.danilodantas.localizacao.domain.entity.Cidade;
 import io.github.danilodantas.localizacao.domain.repository.CidadeRepository;
+import io.github.danilodantas.localizacao.domain.repository.projections.CidadeProjection;
+
 import static io.github.danilodantas.localizacao.domain.repository.specs.CidadeSpecs.*;
 
 @Service
@@ -34,6 +36,13 @@ public class CidadeService {
 	
 	public void listarCidadesPorNome() {
 		cidadeRepository.findByNome("Porto Velho").forEach(System.out::println);
+	}
+	
+	public void listarCidadesPorNomeSQL() {
+		cidadeRepository
+			.findByNomeSqlNativo("São Paulo")
+			.stream().map(cidadeProjection -> new Cidade(cidadeProjection.getId(), cidadeProjection.getNome(),null))
+			.forEach(System.out::println);
 	}
 	
 	public void listarCidadesPorNomeComeca() {
@@ -114,6 +123,7 @@ public class CidadeService {
 		
 		if (filtro.getId() != null) {
 			specs = specs.and(idEqual(filtro.getId()));
+			
 		}
 		
 		if (StringUtils.hasText(filtro.getNome())) {
