@@ -3,6 +3,7 @@ package io.github.danilodantas.localizacao.domain.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import io.github.danilodantas.localizacao.domain.entity.Cidade;
 
@@ -10,6 +11,10 @@ public interface CidadeRepository extends JpaRepository<Cidade, Long> {
 
 	// Busca pelo nome correto
 	List<Cidade> findByNome(String nome);
+	
+	// Busca pelo nome like
+	@Query("select c from Cidade c where lower(c.nome) like lower(?1) ")
+	List<Cidade> findByNomeLike(String nome);
 	
 	// busca pelo nome começando por aquele pedaço
 	List<Cidade> findByNomeStartingWith(String nome);
